@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionModel } from '../../models';
+import { MathState, selectQuestionModel, selectAtEndOfQuestions } from 'src/app/features/math/reducers';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { answerProvided } from '../../actions/question.actions';
 
 @Component({
   selector: 'app-game',
@@ -6,10 +11,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-
-  constructor() { }
+  model$: Observable<QuestionModel>;
+  atEnd$: Observable<boolean>;
+  constructor(private store: Store<MathState>) { }
 
   ngOnInit() {
+    this.model$ = this.store.select(selectQuestionModel);
+    this.atEnd$ = this.store.select(selectAtEndOfQuestions);
   }
-
+  next(guessEl: HTMLInputElement) {
+    const guess = guessEl.valueAsNumber;
+    this.store.dispatch(answerProvided({ guess }));
+    guessEl.value = '';
+    guessEl.focus();
+  }
 }

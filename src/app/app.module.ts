@@ -7,6 +7,9 @@ import { HomeComponent } from './components/home/home.component';
 import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.component';
 import { NavComponent } from './components/nav/nav.component';
 import { MathModule } from './features/math/math.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './features/math/reducers';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { MathModule } from './features/math/math.module';
   imports: [
     BrowserModule,
     MathModule,
-    AppRoutingModule // After Feature Modules
+    AppRoutingModule, // After Feature Modules
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]

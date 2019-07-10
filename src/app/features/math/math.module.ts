@@ -4,6 +4,8 @@ import { MathComponent } from './math.component';
 import { Routes, RouterModule } from '@angular/router';
 import { GameComponent } from './components/game/game.component';
 import { ScoresComponent } from './components/scores/scores.component';
+import { StoreModule } from '@ngrx/store';
+import { featureName, reducers } from 'src/app/features/math/reducers';
 
 const routes: Routes = [
   {
@@ -20,7 +22,8 @@ const routes: Routes = [
   declarations: [MathComponent, GameComponent, ScoresComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    StoreModule.forFeature(featureName, reducers)
   ]
 })
 export class MathModule { }

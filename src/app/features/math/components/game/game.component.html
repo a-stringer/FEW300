@@ -1,1 +1,29 @@
-<p>game works!</p>
+<div class="card">
+  <div class="card-body row">
+    <div class="col-6">
+      <h5 class="card-title">Question {{ (model$ | async)?.num }} of {{(model$ | async)?.of}}</h5>
+
+      <p class="card-text">{{(model$ | async)?.question}}</p>
+
+    </div>
+    <div class="col-6">
+      <div class="form-group row">
+        <label class="col-form-label col-3"
+          for="answer">Answer:</label>
+        <input class="form-control col-6"
+          type="number"
+          min="0"
+          id="answer"
+          #guess>
+        <button type="button"
+          *ngIf="!(atEnd$ | async)"
+          (click)="next(guess)"
+          class="btn btn-success btn-col col-3">Next Question</button>
+        <button type="button"
+          *ngIf="(atEnd$ | async)"
+          (click)="next(guess)"
+          class="btn btn-danger btn-col col-3">Game Finished</button>
+      </div>
+    </div>
+  </div>
+</div>
