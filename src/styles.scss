@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+$body-bg: rebeccapurple;
+$theme-colors:  (
+  'primary': lavender
+);
+
+$enable-rounded: false;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+html {
+  font-size: 62.5%;
+  * {
+    font-size: 1.8rem;
+  }
+}

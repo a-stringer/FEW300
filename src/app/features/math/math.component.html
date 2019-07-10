@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-2">
+    <a [routerLinkActive]="['active']"
+      [routerLink]="['game']"
+      class="nav-link">Game</a>
+    <a [routerLinkActive]="['active']"
+      [routerLink]="['scores']"
+      class="nav-link">Scores</a>
+  </div>
+  <div class="col-10">
+    <router-outlet></router-outlet>
+  </div>
+</div>
