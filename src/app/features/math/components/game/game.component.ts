@@ -4,6 +4,7 @@ import { MathState, selectQuestionModel, selectAtEndOfQuestions, selectGameOverM
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { answerProvided, playAgain } from '../../actions/question.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -14,7 +15,7 @@ export class GameComponent implements OnInit {
   model$: Observable<QuestionModel>;
   atEnd$: Observable<boolean>;
   gameOver$: Observable<boolean>;
-  constructor(private store: Store<MathState>) { }
+  constructor(private store: Store<MathState>, private router: Router) { }
 
   ngOnInit() {
     this.model$ = this.store.select(selectQuestionModel);
@@ -30,5 +31,10 @@ export class GameComponent implements OnInit {
 
   replay() {
     this.store.dispatch(playAgain());
+  }
+  finishGame(guessEl: HTMLInputElement) {
+    const guess = guessEl.valueAsNumber;
+    this.store.dispatch(answerProvided({ guess }));
+    this.router.navigate(['math', 'scores']);
   }
 }

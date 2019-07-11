@@ -40,7 +40,9 @@ const selectSelectedQuestion = createSelector(
 export const selectQuestionModel = createSelector(
   selectTotalNumberOfQuestions,
   selectSelectedQuestion,
-  (total, selected) => {
+  selectCurrentQuestionId,
+  (total, selected, currentId) => {
+    if (currentId > total) { return null; }
     return {
       num: selected.id,
       of: total,

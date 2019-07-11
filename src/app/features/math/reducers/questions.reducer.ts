@@ -15,7 +15,7 @@ export interface MathQuestionsState extends EntityState<QuestionEntity> {
 }
 
 const initialState: MathQuestionsState = {
-  currentQuestionId: 1,
+  currentQuestionId: 4,
   missedQuestions: [],
   ids: [1, 2, 3, 4, 5],
   entities: {
