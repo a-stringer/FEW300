@@ -7,6 +7,7 @@ import { ScoresComponent } from './components/scores/scores.component';
 import { StoreModule } from '@ngrx/store';
 import { featureName, reducers } from 'src/app/features/math/reducers';
 import { ScoreListComponent } from './components/score-list/score-list.component';
+import { GameOverGuard } from './guards/game-over.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'game', pathMatch: 'full' },
       { path: 'game', component: GameComponent },
-      { path: 'scores', component: ScoresComponent }
+      { path: 'scores', component: ScoresComponent, canActivate: [GameOverGuard] }
     ]
   }
 ];

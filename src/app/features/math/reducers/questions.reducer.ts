@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import * as questionActions from '../actions/question.actions';
 import { tassign } from 'tassign';
-
+import { MathState } from '.';
 export interface QuestionEntity {
   id: number;
   question: string;
@@ -14,8 +14,9 @@ export interface MathQuestionsState extends EntityState<QuestionEntity> {
   missedQuestions: MissedQuestion[];
 }
 
+
 const initialState: MathQuestionsState = {
-  currentQuestionId: 4,
+  currentQuestionId: 1,
   missedQuestions: [],
   ids: [1, 2, 3, 4, 5],
   entities: {
@@ -61,10 +62,14 @@ const mathReducer = createReducer(
       // add the questionId and their guess to the array of missedQuestions
       tempState = { ...tempState, missedQuestions: [...state.missedQuestions, { id: currentQuestion.id, providedAnswer: action.guess }] };
     }
+    // const newState = ({ ...tempState, currentQuestionId: state.currentQuestionId + 1 });
     const newState = tassign(tempState, { currentQuestionId: state.currentQuestionId + 1 });
     return newState;
   })
 );
+
+// Note: We have to do this because the ng AOT compiler cannot import from the result of a function call
+// so we export instead a function that calls our function.
 export function reducer(state: MathQuestionsState | undefined, action: Action) {
   return mathReducer(state, action);
 }
