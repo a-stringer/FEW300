@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionModel } from '../../models';
-import { MathState, selectQuestionModel, selectAtEndOfQuestions } from 'src/app/features/math/reducers';
+import { MathState, selectQuestionModel, selectAtEndOfQuestions, selectGameOverMan } from 'src/app/features/math/reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { answerProvided } from '../../actions/question.actions';
+import { answerProvided, playAgain } from '../../actions/question.actions';
 
 @Component({
   selector: 'app-game',
@@ -13,16 +13,22 @@ import { answerProvided } from '../../actions/question.actions';
 export class GameComponent implements OnInit {
   model$: Observable<QuestionModel>;
   atEnd$: Observable<boolean>;
+  gameOver$: Observable<boolean>;
   constructor(private store: Store<MathState>) { }
 
   ngOnInit() {
     this.model$ = this.store.select(selectQuestionModel);
     this.atEnd$ = this.store.select(selectAtEndOfQuestions);
+    this.gameOver$ = this.store.select(selectGameOverMan);
   }
   next(guessEl: HTMLInputElement) {
     const guess = guessEl.valueAsNumber;
     this.store.dispatch(answerProvided({ guess }));
     guessEl.value = '';
     guessEl.focus();
+  }
+
+  replay() {
+    this.store.dispatch(playAgain());
   }
 }

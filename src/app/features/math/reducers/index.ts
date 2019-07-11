@@ -7,19 +7,25 @@ import { QuestionModel } from '../models';
 export interface MathState {
   questions: fromQuestions.MathQuestionsState;
 }
+
 export const reducers = {
   questions: fromQuestions.reducer
 };
 
-// 1. Create a feature selector that know how to find the feature in the state.
+
+// 1. Create a feature selector (that knows how to find the feature in the state)
 const selectMathFeature = createFeatureSelector<MathState>(featureName);
 
-// 2. create a selector for each "branch" of the MathState (e.g., questions)
+// 2. Create a selector for each "branch" of the MathState (e.g., questions)
+
 const selectQuestionsBranch = createSelector(selectMathFeature, m => m.questions);
 
 // 3. Selectors that are "helpers" to get the data you need for step 4.
 const selectCurrentQuestionId = createSelector(selectQuestionsBranch, q => q.currentQuestionId);
-const { selectTotal: totalQuestions, selectEntities: selectQuestionEntities } = fromQuestions.adapter.getSelectors(selectQuestionsBranch);
+// Object Destructuring - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+const {
+  selectTotal: selectTotalNumberOfQuestions,
+  selectEntities: selectQuestionEntities } = fromQuestions.adapter.getSelectors(selectQuestionsBranch);
 
 const selectSelectedQuestion = createSelector(
   selectQuestionEntities,
@@ -30,8 +36,9 @@ const selectSelectedQuestion = createSelector(
 
 // TODO Create a selector that returns a QuestionModel
 // current id, how many total, question for the current question
+
 export const selectQuestionModel = createSelector(
-  totalQuestions,
+  selectTotalNumberOfQuestions,
   selectSelectedQuestion,
   (total, selected) => {
     return {
@@ -43,7 +50,12 @@ export const selectQuestionModel = createSelector(
 );
 
 export const selectAtEndOfQuestions = createSelector(
-  totalQuestions,
+  selectTotalNumberOfQuestions,
   selectCurrentQuestionId,
   (total, current) => total === current
+);
+
+export const selectGameOverMan = createSelector(
+  selectQuestionsBranch,
+  q => q.missedQuestions.length === 3
 );
