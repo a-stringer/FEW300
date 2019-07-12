@@ -9,10 +9,17 @@ export interface ScoresModel {
   numberCorrect: number;
   numberWrong: number;
 }
-interface ScoreLineModel {
+export interface ScoreLineModel {
   num: number;
   question: string;
   answer: number;
   incorrect: boolean;
   providedAnswer: number;
+}
+export interface SavedScoresModel {
+  id: number;
+  who: string;
+  right: number;
+  wrong: number;
+  when: string;
 }

@@ -3,8 +3,7 @@
 <button *ngIf="(gameOver$ | async)"
   class="btn btn-success"
   (click)="replay()">Play Again</button>
-<div class="card"
-  *ngIf="!(gameOver$ | async)">
+<ng-container *ngIf="!(gameOver$ | async)">
   <div class="card-body row">
     <div class="col-3">
       <h5 class="card-title">Question {{ (model$ | async)?.num }} of {{(model$ | async)?.of}}</h5>
@@ -32,4 +31,4 @@
       </div>
     </div>
   </div>
-</div>
+</ng-container>

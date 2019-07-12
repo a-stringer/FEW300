@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  savedScoresURL: 'http://realworldserver.progressive.com/scores'
 };
