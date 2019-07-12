@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MathState, selectAtEndOfQuestions } from '../reducers';
 import { Store } from '@ngrx/store';
-import { MathState } from '../reducers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameOverGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private strore: Store<MathState>) { }
+  constructor(private store: Store<MathState>) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return false;
+    return this.store.select(selectAtEndOfQuestions);
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,

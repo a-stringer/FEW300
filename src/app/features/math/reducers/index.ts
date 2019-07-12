@@ -1,3 +1,4 @@
+
 export const featureName = 'mathFeature';
 import * as fromQuestions from './questions.reducer';
 
@@ -11,6 +12,7 @@ export interface MathState {
 export const reducers = {
   questions: fromQuestions.reducer
 };
+
 
 // 1. Create a feature selector (that knows how to find the feature in the state)
 const selectMathFeature = createFeatureSelector<MathState>(featureName);
@@ -54,7 +56,7 @@ export const selectQuestionModel = createSelector(
 export const selectAtEndOfQuestions = createSelector(
   selectTotalNumberOfQuestions,
   selectCurrentQuestionId,
-  (total, current) => total === current
+  (total, current) => current >= total
 );
 
 export const selectGameOverMan = createSelector(
@@ -93,8 +95,8 @@ export const selectScoresModel = createSelector(
           providedAnswer
         };
         return questionResponse;
-      }
-      )
+
+      })
     };
     return result;
   }
