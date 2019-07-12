@@ -7,6 +7,7 @@ import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.comp
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent },
+  { path: 'admin', loadChildren: () => import('./features/admin/admin.module').then(mod => mod.AdminModule) },
   { path: 'not-found', component: FourOhFourComponent },
   { path: '**', component: FourOhFourComponent },
 ];
